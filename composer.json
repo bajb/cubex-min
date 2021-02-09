@@ -9,9 +9,8 @@
   },
   "prefer-stable": true,
   "require": {
-    "cubex/framework": "^4.0"
-  },
-  "require-dev": {
+    "cubex/framework": "^4.0",
+    "workerman/workerman": "^4.0"
   },
   "autoload": {
     "psr-4": {
