@@ -9,9 +9,16 @@
   },
   "prefer-stable": true,
   "require": {
-    "cubex/framework": "^4.0"
-  },
-  "require-dev": {
+    "cubex/framework": "^4.0",
+    "packaged/polyfill-ctype": "*",
+    "packaged/polyfill-intl": "*",
+    "packaged/polyfill-mbstring": "*",
+    "packaged/polyfill-php71": "*",
+    "packaged/polyfill-php72": "*",
+    "packaged/polyfill-php73": "*",
+    "packaged/polyfill-php74": "*",
+    "packaged/polyfill-php80": "*",
+    "packaged/polyfill-php81": "*"
   },
   "autoload": {
     "psr-4": {
