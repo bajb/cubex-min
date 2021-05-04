@@ -11,10 +11,13 @@ try
   $useWorker = true;
   if($useWorker)
   {
-    $worker = new CubexWorkerman('http://0.0.0.0:3000');
-    $worker->setComposerLoader($loader)
-      ->setHandler(function () { return new Application(); })
-      ->start();
+    $worker = CubexWorkerman::create(
+      dirname(__DIR__),
+      $loader,
+      function () { return new Application(); },
+      'http://0.0.0.0:3000'
+    )->setCount(4);
+    $worker->start();
   }
   else
   {

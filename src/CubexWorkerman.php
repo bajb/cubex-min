@@ -10,38 +10,40 @@ use Workerman\Worker;
 
 class CubexWorkerman extends Worker
 {
-  public function __construct($socket_name = '', array $context_option = [])
-  {
-    parent::__construct($socket_name, $context_option);
-    $this->onMessage = [$this, 'onMessage'];
-  }
-
+  protected $_projectRoot;
   protected $_loader;
-
-  /**
-   * @param mixed $loader
-   */
-  public function setComposerLoader($loader)
-  {
-    $this->_loader = $loader;
-    return $this;
-  }
-
-  public function setHandler(callable $handleGenerator)
-  {
-    $this->_handler = $handleGenerator;
-    return $this;
-  }
-
   /**
    * @var callable
    */
   protected $_handler;
 
+  public function __construct($socketName = '', array $contextOption = [])
+  {
+    parent::__construct($socketName, $contextOption);
+    $this->onMessage = [$this, 'onMessage'];
+  }
+
+  public static function create(
+    $projectRoot, $loader, callable $handleGenerator, $socketName = '', array $contextOption = []
+  )
+  {
+    $worker = new static($socketName, $contextOption);
+    $worker->_projectRoot = $projectRoot;
+    $worker->_handler = $handleGenerator;
+    $worker->_loader = $loader;
+    return $worker;
+  }
+
   protected function _makeHandler(): ?Handler
   {
     $gen = $this->_handler;
     return $gen();
+  }
+
+  public function setCount(int $count)
+  {
+    $this->count = $count;
+    return $this;
   }
 
   public function start()
@@ -60,7 +62,7 @@ class CubexWorkerman extends Worker
       [],
       $request->rawBody()
     );
-    $cubex = new Cubex(dirname(__DIR__), $this->_loader);
+    $cubex = new Cubex($this->_projectRoot, $this->_loader);
     $cubex->share(Context::class, $cubex->prepareContext(new Context($cReq)));
     $response = $cubex->handle($this->_makeHandler(), false);
 
