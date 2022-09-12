@@ -5,6 +5,13 @@ use Cubex\Controller\Controller;
 
 class Application extends Controller
 {
+  public static $launched = 0;
+
+  public function __construct()
+  {
+    static::$launched++;
+  }
+
   protected function _generateRoutes()
   {
     yield self::_route('/user/{id}', 'user');
@@ -24,6 +31,6 @@ class Application extends Controller
 
   public function getHome()
   {
-    return "OK";
+    return "OK" . static::$launched;
   }
 }

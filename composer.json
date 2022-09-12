@@ -2,6 +2,7 @@
   "name": "bajb/cubex-min",
   "license": "MIT",
   "type": "project",
+  "minimum-stability": "dev",
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
@@ -9,7 +10,7 @@
   },
   "prefer-stable": true,
   "require": {
-    "cubex/framework": "^4.0",
+    "cubex/workerman": "*",
     "workerman/workerman": "^4.0"
   },
   "autoload": {

@@ -2,8 +2,8 @@
 define('PHP_START', microtime(true));
 
 use Cubex\Cubex;
+use Cubex\Workerman\CubexWorker;
 use CubexMin\Application;
-use CubexMin\CubexWorkerman;
 
 $loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
 try
@@ -11,7 +11,7 @@ try
   $useWorker = true;
   if($useWorker)
   {
-    $worker = CubexWorkerman::create(
+    $worker = CubexWorker::create(
       dirname(__DIR__),
       $loader,
       function () { return new Application(); },
